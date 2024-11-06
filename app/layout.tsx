@@ -1,13 +1,7 @@
-import {
-  ClerkProvider,
-  SignInButton,
-  SignedIn,
-  SignedOut,
-  UserButton
-} from '@clerk/nextjs'
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import { Toaster } from "@/components/ui/toaster";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -31,12 +25,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider>
-      <html lang="en">
-        <body>
+    <html lang="en">
+      <body className="dark">
           {children}
-        </body>
-      </html>
-    </ClerkProvider>
+          <Toaster />
+      </body>
+    </html>
   );
 }
