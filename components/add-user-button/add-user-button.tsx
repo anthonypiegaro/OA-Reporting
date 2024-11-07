@@ -3,13 +3,12 @@
 import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { z } from "zod"
+import { z } from "zod";
 import { UserRoundPlus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
     Dialog,
     DialogContent,
-    DialogFooter,
     DialogHeader,
     DialogTitle,
     DialogTrigger,
@@ -33,14 +32,9 @@ import {
     SelectValue,
 } from "@/components/ui/select"
 
-const formSchema = z.object({
-    name: z.string().min(1, {
-        message: "Name is required"
-    }),
-    email: z.string().email(),
-    playingLevel: z.enum(["high school", "college", "professional"]),
-    role: z.enum(["athlete", "trainer"])
-});
+import { AddUserAction } from "./actions";
+
+import { formSchema } from "./form-schema";
 
 export default function AddUserButton() {
     const [open, setOpen] = useState(false);
@@ -59,27 +53,24 @@ export default function AddUserButton() {
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         setSubmitting(true);
 
-        const delay = (ms: number): Promise<void> => {
-            return new Promise(resolve => setTimeout(resolve, ms));
-        };
-        await delay(5000);
-        const success = Math.random() <= 0.5;
-
-        if (success) {
-            toast({
-                title: `${values.name} has been added as ${values.role === "trainer" ? "a Trainer" : "an Athlete"}`,
-                description: `${values.name} added with a playing level of ${values.playingLevel.charAt(0).toUpperCase() + values.playingLevel.slice(1)}
-                            and email of ${values.email}.`
+        await AddUserAction(values)
+            .then((data) => {
+                console.log(data.message);
+                toast({
+                    title: `${values.name} has been added as ${values.role === "trainer" ? "a Trainer" : "an Athlete"}`,
+                    description: `${values.name} added with a playing level of ${values.playingLevel.charAt(0).toUpperCase() + values.playingLevel.slice(1)}
+                                and email of ${values.email}.`
+                });
+                setOpen(false);
+            })
+            .catch(error => {
+                toast({
+                    variant: "destructive",
+                    title: `Uh Oh, an error occured`,
+                    description: error.message,
+                    action: <ToastAction altText="Try again" onClick={form.handleSubmit(onSubmit)}>Try Again</ToastAction>
+                });
             });
-            setOpen(false);
-        } else {
-            toast({
-                variant: "destructive",
-                title: `Uh Oh, an error occured`,
-                description: "An error occured on the server.",
-                action: <ToastAction altText="Try again" onClick={form.handleSubmit(onSubmit)}>Try Again</ToastAction>
-            });
-        }
 
         setSubmitting(false);
     }

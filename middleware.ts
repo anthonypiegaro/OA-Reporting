@@ -1,6 +1,31 @@
-import { clerkMiddleware } from "@clerk/nextjs/server";
+import { RedirectToSignIn } from "@clerk/nextjs";
+import { clerkClient, clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
+import { NextResponse } from "next/server";
 
-export default clerkMiddleware();
+const isPublicRoute = createRouteMatcher(["/sign-in(.*)"]);
+
+const isTrainerRoute = createRouteMatcher(["/dashboard/users"]);
+
+export default clerkMiddleware(async (auth, request) => {
+  if (isTrainerRoute(request)) {
+    const { userId } = await auth();
+
+    if (!userId) {
+      const signInUrl = new URL('/sign-in', request.url);
+      return NextResponse.redirect(signInUrl);
+    }
+    console.log("In trainer route")
+    const user = await (await clerkClient()).users.getUser(userId);
+    if (user.privateMetadata.role !== "trainer") {
+      const signInUrl = new URL('/sign-in', request.url);
+      return NextResponse.redirect(signInUrl);
+    }
+  }
+
+  if (!isPublicRoute(request)) {
+    await auth.protect();
+  }
+});
 
 export const config = {
   matcher: [
