@@ -1,10 +1,12 @@
 "use server"
+
+import { revalidatePath } from "next/cache";
 import { auth, clerkClient } from "@clerk/nextjs/server";
 import { eq } from "drizzle-orm";
 import { db } from "@/app/db/db";
 import { users, InsertUser } from "@/app/db/schema";
 
-export const AddUserAction = async (values: InsertUser, req: Request) => {
+export const AddUserAction = async (values: InsertUser) => {
     const { userId } = await auth();
 
     if (!userId) {
@@ -45,6 +47,7 @@ export const AddUserAction = async (values: InsertUser, req: Request) => {
 
         await tsx.update(users).set({ clerkId: clerkUser.id }).where(eq(users.id, user.userId));
     });
+    revalidatePath("/dashboard/users");
     const data = { 
         message: "User added successfully",
     };

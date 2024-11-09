@@ -1,5 +1,5 @@
 import { pgTable, serial, text, timestamp } from "drizzle-orm/pg-core";
-import { createInsertSchema } from "drizzle-zod";
+import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { z } from "zod";
 
 export const users = pgTable("users", {
@@ -14,4 +14,7 @@ export const users = pgTable("users", {
 });
 
 const insertUser = createInsertSchema(users);
+const selectUser = createSelectSchema(users);
+
 export type InsertUser = z.infer<typeof insertUser>;
+export type SelectUser = z.infer<typeof selectUser>;

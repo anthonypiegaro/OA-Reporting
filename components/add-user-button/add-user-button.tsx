@@ -82,7 +82,7 @@ export default function AddUserButton() {
 
     const AddUserForm = (
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="my-6 space-y-4">
                 <FormField 
                     control={form.control}
                     name="name"
@@ -160,7 +160,7 @@ export default function AddUserButton() {
     return (
         <Dialog open={open} onOpenChange={handleOpenChange}>
             <DialogTrigger asChild>
-                <Button>
+                <Button variant="outline">
                     <UserRoundPlus /> Add User
                 </Button>
             </DialogTrigger>
