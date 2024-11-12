@@ -13,8 +13,27 @@ export const users = pgTable("users", {
     clerkId: text("clerkId").unique()
 });
 
+export const templates = pgTable("templates", {
+    id: serial("id").primaryKey(),
+    name: text("name").notNull().unique(),
+    description: text("description"),
+    createdAt: timestamp("createdAt").defaultNow().notNull(),
+    updatedAt: timestamp("updatedAt").defaultNow().notNull(),
+});
+
 const insertUser = createInsertSchema(users);
 const selectUser = createSelectSchema(users);
 
 export type InsertUser = z.infer<typeof insertUser>;
 export type SelectUser = z.infer<typeof selectUser>;
+
+const insertTemplate = createInsertSchema(templates);
+const selectTemplate = createSelectSchema(templates);
+
+export type InsertTemplate = z.infer<typeof insertTemplate>;
+export type SelectTemplate = z.infer<typeof selectTemplate>;
+
+export type Schema = {
+    users: typeof users;
+    templates: typeof templates;
+}

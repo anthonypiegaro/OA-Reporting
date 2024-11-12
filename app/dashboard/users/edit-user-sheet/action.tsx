@@ -19,7 +19,7 @@ export async function editUser(values: ActionData) {
     const { userId } = await auth();
 
     if (!userId) {
-        return new Error("Forbudden: not signed in");
+        return new Error("Forbidden: not signed in");
     }
 
     const client = await clerkClient();

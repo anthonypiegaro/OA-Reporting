@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 
 const isPublicRoute = createRouteMatcher(["/sign-in(.*)"]);
 
-const isTrainerRoute = createRouteMatcher(["/dashboard/users"]);
+const isTrainerRoute = createRouteMatcher(["/dashboard/users", "/dashboard/templates"]);
 
 export default clerkMiddleware(async (auth, request) => {
   if (isTrainerRoute(request)) {
@@ -14,7 +14,7 @@ export default clerkMiddleware(async (auth, request) => {
       const signInUrl = new URL('/sign-in', request.url);
       return NextResponse.redirect(signInUrl);
     }
-    console.log("In trainer route")
+
     const user = await (await clerkClient()).users.getUser(userId);
     if (user.privateMetadata.role !== "trainer") {
       const signInUrl = new URL('/sign-in', request.url);
