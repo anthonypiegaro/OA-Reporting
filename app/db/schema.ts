@@ -1,4 +1,4 @@
-import { pgTable, serial, text, timestamp } from "drizzle-orm/pg-core";
+import { boolean, pgEnum, pgTable, serial, text, timestamp, varchar } from "drizzle-orm/pg-core";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { z } from "zod";
 
@@ -17,6 +17,19 @@ export const templates = pgTable("templates", {
     id: serial("id").primaryKey(),
     name: text("name").notNull().unique(),
     description: text("description"),
+    createdAt: timestamp("createdAt").defaultNow().notNull(),
+    updatedAt: timestamp("updatedAt").defaultNow().notNull(),
+});
+
+export const assessmentTypeEnum = pgEnum("assessmentType", ["quantitative", "qualitative", "pdf"]);
+
+export const assessments = pgTable("assessments", {
+    id: serial("id").primaryKey(),
+    name: text("name").notNull(),
+    type: assessmentTypeEnum().notNull(),
+    description: varchar("description", { length: 1000 }),
+    url: varchar("url", { length: 1000 }),
+    hidden: boolean().default(false).notNull(),
     createdAt: timestamp("createdAt").defaultNow().notNull(),
     updatedAt: timestamp("updatedAt").defaultNow().notNull(),
 });
