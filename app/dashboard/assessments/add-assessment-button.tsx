@@ -21,6 +21,7 @@ import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 
 import QuantForm from "./forms/quant-form/quant-form";
+import QualForm from "./forms/qual-form/qual-form";
 
 type forms = "quant" | "qual" | "pdf";
 
@@ -74,7 +75,7 @@ export default function AddAssessmentButton() {
                 </DialogHeader>
                 <div>
                     {type === "quant" && <QuantForm handleSuccess={handleSuccess} />}
-                    {type === "qual" && <div>Qual</div> }
+                    {type === "qual" && <QualForm handleSuccess={handleSuccess} /> }
                     {type === "pdf" && <div>PDF</div>}
                 </div>
             </DialogContent>

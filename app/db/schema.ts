@@ -58,6 +58,14 @@ export const quantitativeAssessments = pgTable("quantitativeAssessments", {
     passDescription: varchar("passDescription", { length: 5000 })
 });
 
+export const qualitativeScoreOptions = pgTable("qualitativeScoreOptions", {
+    id: serial("id").primaryKey(),
+    assessmentId: integer("assessmentId").notNull().references(() => assessments.id),
+    score: varchar("score", { length: 250 }).notNull(),
+    description: varchar("description", { length: 5000 }).notNull(),
+    isPassing: boolean("isPassing").notNull().default(false)
+});
+
 const insertUser = createInsertSchema(users);
 const selectUser = createSelectSchema(users);
 
@@ -87,6 +95,12 @@ const selectQuantitativeAssessment = createSelectSchema(quantitativeAssessments)
 
 export type InsertQuantitativeAssessment = z.infer<typeof insertQuantitativeAssessment>;
 export type SelectQuantitativeAssessment = z.infer<typeof selectQuantitativeAssessment>;
+
+const insertQualitativeScoreOption = createInsertSchema(qualitativeScoreOptions);
+const selectQualitativeScoreOption = createSelectSchema(qualitativeScoreOptions);
+
+export type InsertQualitativeScoreOption = z.infer<typeof insertQualitativeScoreOption>;
+export type SelectQualitativeScoreOption = z.infer<typeof selectQualitativeScoreOption>;
 
 export type Schema = {
     users: typeof users;
