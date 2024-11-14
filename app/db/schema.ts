@@ -63,7 +63,8 @@ export const qualitativeScoreOptions = pgTable("qualitativeScoreOptions", {
     assessmentId: integer("assessmentId").notNull().references(() => assessments.id),
     score: varchar("score", { length: 250 }).notNull(),
     description: varchar("description", { length: 5000 }).notNull(),
-    isPassing: boolean("isPassing").notNull().default(false)
+    isPassing: boolean("isPassing").notNull().default(false),
+    hidden: boolean("hidden").notNull().default(false)
 });
 
 const insertUser = createInsertSchema(users);
