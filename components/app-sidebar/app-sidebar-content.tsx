@@ -2,7 +2,7 @@
 
 import { auth, clerkClient } from "@clerk/nextjs/server";
 import Link from "next/link";
-import { House, User, ScrollText } from "lucide-react"
+import { Dumbbell, House, User, ScrollText } from "lucide-react"
 import {
     SidebarMenuButton,
     SidebarMenuItem,
@@ -33,6 +33,11 @@ export default async function AppSidebarContent() {
                 title: "Templates",
                 url: "/dashboard/templates",
                 icon: ScrollText,
+            },
+            {
+                title: "Assessments",
+                url: "/dashboard/assessments",
+                icon: Dumbbell,
             },
         ]
     } else {

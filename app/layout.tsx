@@ -27,12 +27,12 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-      <html lang="en" className="flex flex-1">
-        <body className="dark flex flex-1">
-            {children}
-            <Toaster />
-        </body>
-      </html>
+        <html lang="en" className="flex flex-1">
+          <body className="dark flex flex-1">
+              {children}
+              <Toaster />
+          </body>
+        </html>
     </ClerkProvider>
   );
 }
