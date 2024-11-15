@@ -79,8 +79,8 @@ const selectTemplate = createSelectSchema(templates);
 export type InsertTemplate = z.infer<typeof insertTemplate>;
 export type SelectTemplate = z.infer<typeof selectTemplate>;
 
-const insertAssessment = createInsertSchema(assessments);
-const selectAssessment = createSelectSchema(assessments);
+export const insertAssessment = createInsertSchema(assessments);
+export const selectAssessment = createSelectSchema(assessments);
 
 export type InsertAssessment = z.infer<typeof insertAssessment>;
 export type SelectAssessment = z.infer<typeof selectAssessment>;
@@ -97,8 +97,8 @@ const selectQuantitativeAssessment = createSelectSchema(quantitativeAssessments)
 export type InsertQuantitativeAssessment = z.infer<typeof insertQuantitativeAssessment>;
 export type SelectQuantitativeAssessment = z.infer<typeof selectQuantitativeAssessment>;
 
-const insertQualitativeScoreOption = createInsertSchema(qualitativeScoreOptions);
-const selectQualitativeScoreOption = createSelectSchema(qualitativeScoreOptions);
+export const insertQualitativeScoreOption = createInsertSchema(qualitativeScoreOptions);
+export const selectQualitativeScoreOption = createSelectSchema(qualitativeScoreOptions);
 
 export type InsertQualitativeScoreOption = z.infer<typeof insertQualitativeScoreOption>;
 export type SelectQualitativeScoreOption = z.infer<typeof selectQualitativeScoreOption>;
