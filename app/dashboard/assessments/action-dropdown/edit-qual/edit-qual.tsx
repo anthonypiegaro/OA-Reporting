@@ -1,7 +1,5 @@
 "use client"
 
-import { useState } from "react";
-import { useForm } from "react-hook-form";
 import { useQuery } from "@tanstack/react-query";
 import {
     Sheet,
@@ -9,25 +7,25 @@ import {
     SheetHeader,
     SheetTitle
 } from "@/components/ui/sheet";
-import { getQuantitativeAssessment } from "../actions/get-quant-assessments";
 import { Row } from "@tanstack/react-table";
 import { SelectAssessment } from "@/app/db/schema";
 import { ToastProps } from "@/components/ui/toast";
-import { EditQuantData } from "../types/edit-quant-type";
-import EditQuantForm from "./edit-quant-form";
+import EditQualForm from "./edit-qual-form";
+import { getQualitativeAssessmentScoreOptions } from "../actions/get-qual-assessment";
+import { EditQualData } from "../types/edit-qual-type";
 
-interface EditQuantProps {
-    showEditQuant: boolean;
+interface EditQualProps {
+    showEditQual: boolean;
     row: Row<SelectAssessment>;
     handleEditOpenChange: (open: boolean) => void;
     showToast: (props: ToastProps) => void;
 }
 
-export default function EditQuant({ showEditQuant, row, handleEditOpenChange, showToast }: EditQuantProps) {
+export default function EditQual({ showEditQual, row, handleEditOpenChange, showToast }: EditQualProps) {
     const { data, isLoading, isError, error } = useQuery({
         queryKey: ["assessments", row.getValue("id")],
-        queryFn: async () => await getQuantitativeAssessment(row.getValue("id")),
-        enabled: showEditQuant
+        queryFn: async () => await getQualitativeAssessmentScoreOptions(row.getValue("id")),
+        enabled: showEditQual
     });
 
     let content: React.ReactNode;
@@ -45,21 +43,15 @@ export default function EditQuant({ showEditQuant, row, handleEditOpenChange, sh
             <>Loading...</>
         )
     } else {
-        const fullAssessmentData: EditQuantData = {
+        const fullAssessmentData: EditQualData = {
             id: row.getValue("id"),
             name: row.getValue("name"),
-            type: "quantitative",
             description: row.getValue("description"),
             url: row.getValue("url"),
-            quantitativeId: data.id,
-            unit: data.unit,
-            comparativeScore: data.comparativeScore,
-            comparisonType: data.comparisonType,
-            failDescription: data.failDescription,
-            passDescription: data.passDescription
+            qualitativeScoreOptions: data
         }
 
-        content = <EditQuantForm
+        content = <EditQualForm
             data={fullAssessmentData} 
             showToast={showToast} 
             handleEditOpenChange={handleEditOpenChange}
@@ -67,15 +59,15 @@ export default function EditQuant({ showEditQuant, row, handleEditOpenChange, sh
     }
 
     return (
-        <Sheet open={showEditQuant} onOpenChange={handleEditOpenChange}>
+        <Sheet open={showEditQual} onOpenChange={handleEditOpenChange}>
             <SheetContent className="overflow-y-auto scrollbar-hide">
                 <SheetHeader>
-                    <SheetTitle>Edit Quantitative Assessment</SheetTitle>
+                    <SheetTitle>Edit Qualitative Assessment</SheetTitle>
                 </SheetHeader>
                 <div>
                     {content}
                 </div>
-            </SheetContent>
+                </SheetContent>
         </Sheet>
     )
 }

@@ -16,7 +16,9 @@ import { Row } from "@tanstack/react-table";
 import HideAssessmentAlert from "./hide-assessment-alert";
 import { useToast } from "@/hooks/use-toast";
 import { type ToastProps } from "@/components/ui/toast";
+
 import EditQuant from "./edit-quant/edit-quant";
+import EditQual from "./edit-qual/edit-qual";
 
 interface ActionDropdownProps {
   row: Row<SelectAssessment>;
@@ -45,6 +47,14 @@ export default function ActionDropdown({ row }: ActionDropdownProps) {
       {type === "quantitative" && 
         <EditQuant 
           showEditQuant={showEdit} 
+          row={row} 
+          handleEditOpenChange={handleEditOpenChange}
+          showToast={showToast}
+        />
+      }
+      {type === "qualitative" && 
+        <EditQual
+          showEditQual={showEdit} 
           row={row} 
           handleEditOpenChange={handleEditOpenChange}
           showToast={showToast}
