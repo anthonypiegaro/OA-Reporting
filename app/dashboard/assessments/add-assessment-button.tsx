@@ -22,6 +22,7 @@ import { useToast } from "@/hooks/use-toast";
 
 import QuantForm from "./forms/quant-form/quant-form";
 import QualForm from "./forms/qual-form/qual-form";
+import PdfForm from "./forms/pdf-form/pdf-form";
 
 type forms = "quant" | "qual" | "pdf";
 
@@ -76,7 +77,7 @@ export default function AddAssessmentButton() {
                 <div>
                     {type === "quant" && <QuantForm handleSuccess={handleSuccess} />}
                     {type === "qual" && <QualForm handleSuccess={handleSuccess} /> }
-                    {type === "pdf" && <div>PDF</div>}
+                    {type === "pdf" && <PdfForm handleSuccess={handleSuccess} />}
                 </div>
             </DialogContent>
         </Dialog>
