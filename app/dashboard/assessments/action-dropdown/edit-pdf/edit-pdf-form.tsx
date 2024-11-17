@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react";
+import { useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
@@ -16,36 +17,52 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
-import { ToastAction } from "@/components/ui/toast";
+import { ToastAction, ToastProps } from "@/components/ui/toast";
 
-import { pdfFormSchema } from "./types";
-import { InsertAssessment } from "@/app/db/schema";
 import { simulateProcess } from "@/utils/simulateProcess";
-import { addPDFAssessment } from "./action";
+import { EditPDFFormType, PDFAssessment } from "../types/edit-pdf-types";
+import { editPDFSchema } from "./schema";
+import { editPDF } from "../actions/edit-pdf-assessment";
 
-interface PdfFormProps {
-    handleSuccess: (name: string) => void;
+interface EditPdfFormProps {
+    data: PDFAssessment;
+    showToast: (props: ToastProps) => void;
+    handleEditOpenChange: (open: boolean) => void;
 }
 
-export default function PdfForm({ handleSuccess }: PdfFormProps) {
+export default function EditPdfForm({ data, showToast, handleEditOpenChange }: EditPdfFormProps) {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const { toast } = useToast();
-    const form = useForm<InsertAssessment>({
-        resolver: zodResolver(pdfFormSchema),
+    const queryClient = useQueryClient();
+    const form = useForm<PDFAssessment>({
+        resolver: zodResolver(editPDFSchema),
         defaultValues: {
-            name: "",
-            description: "",
-            type: "pdf",
-            url: ""
+            id: data.id,
+            name: data.name,
+            description: data.description,
+            url: data.url
         }
     });
 
-    const onSubmit = async (values: InsertAssessment) => {
+    const onSubmit = async (values: PDFAssessment) => {
         setIsSubmitting(true);
 
-        await addPDFAssessment(values)
+        const processedData: EditPDFFormType = {
+            id: values.id
+        }
+
+        if (data.name !== values.name) processedData["name"] = values.name;
+
+        if (data.description !== values.description) processedData["description"] = values.description;
+
+        if (data.url !== values.url) processedData["url"] = values.url;
+
+        await editPDF(processedData)
         .then(() => {
-            handleSuccess(values.name);
+            showToast({
+                title: "Changes Saved"
+            });
+            handleEditOpenChange(false);
         })
         .catch(error => {
             toast({
@@ -108,7 +125,7 @@ export default function PdfForm({ handleSuccess }: PdfFormProps) {
                     )}
                 />
                 <Button onClick={form.handleSubmit(onSubmit)} disabled={isSubmitting}>
-                        {isSubmitting ? "Adding Assessment" : "Add Assessment"}
+                        {isSubmitting ? "Saving Changes" : "Save Changes"}
                 </Button>
             </form>
         </Form>

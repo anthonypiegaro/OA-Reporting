@@ -255,7 +255,7 @@ export default function EditQualForm({ data, showToast, handleEditOpenChange }: 
                 </motion.div>
                 <motion.div layout>
                     <Button onClick={form.handleSubmit(onSubmit)} disabled={isSubmitting}>
-                        {isSubmitting ? "Adding Assessment" : "Add Assessment"}
+                        {isSubmitting ? "Saving Changes" : "Save Changes"}
                     </Button>
                 </motion.div>
             </form>

@@ -19,6 +19,7 @@ import { type ToastProps } from "@/components/ui/toast";
 
 import EditQuant from "./edit-quant/edit-quant";
 import EditQual from "./edit-qual/edit-qual";
+import EditPDF from "./edit-pdf/edit-pdf";
 
 interface ActionDropdownProps {
   row: Row<SelectAssessment>;
@@ -60,6 +61,14 @@ export default function ActionDropdown({ row }: ActionDropdownProps) {
           showToast={showToast}
         />
       }
+      {type === "pdf" && 
+        <EditPDF
+          showEditQual={showEdit} 
+          row={row} 
+          handleEditOpenChange={handleEditOpenChange}
+          showToast={showToast}
+        />
+      }
       <HideAssessmentAlert 
         closeDropdown={() => setDropdownOpen(false)}
         alertOpen={hideAlertOpen}
@@ -84,7 +93,6 @@ export default function ActionDropdown({ row }: ActionDropdownProps) {
           <DropdownMenuItem onClick={() => setShowEdit(true)} >
             Edit
           </DropdownMenuItem>
-          <DropdownMenuItem>View payment details</DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     </>
