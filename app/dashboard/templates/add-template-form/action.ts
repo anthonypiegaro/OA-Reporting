@@ -19,13 +19,15 @@ export const addTemplate = async (data: AddTemplateType) => {
             description: data.description
         }).returning({ templatesId: templates.id });
     
-        const assessments: InsertTemplateAssessment[] = data.assessments.map((assessment, index) => ({
-            templateId: template.templatesId,
-            assessmentId: assessment.id,
-            orderNumber: index
-        }));
-
-        await tsx.insert(templateAssessment).values(assessments);
+        if (data.assessments.length > 0) {
+            const assessments: InsertTemplateAssessment[] = data.assessments.map((assessment, index) => ({
+                templateId: template.templatesId,
+                assessmentId: assessment.id,
+                orderNumber: index
+            }));
+    
+            await tsx.insert(templateAssessment).values(assessments);
+        }
     });
 
     revalidatePath("/dashboard/templates");
