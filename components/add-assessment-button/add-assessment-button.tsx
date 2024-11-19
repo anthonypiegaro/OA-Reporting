@@ -53,7 +53,7 @@ function AddAssessmentButtonContent({ onAddAssessment }: AddAssessmentButtonProp
     }
 
     return (
-        <div className="space-x-4 w-full">
+        <div className="flex flex-row gap-x-1 w-full">
             <Popover open={open} onOpenChange={setOpen}>
                 <PopoverTrigger asChild>
                     <Button
