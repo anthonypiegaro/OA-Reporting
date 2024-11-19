@@ -67,6 +67,13 @@ export const qualitativeScoreOptions = pgTable("qualitativeScoreOptions", {
     hidden: boolean("hidden").notNull().default(false)
 });
 
+export const templateAssessment = pgTable("templateAssessment", {
+    id: serial("id").primaryKey(),
+    templateId: integer("templateId").notNull().references(() => templates.id, { onDelete: "cascade" }),
+    assessmentId: integer("assessmentId").notNull().references(() => assessments.id, { onDelete: "cascade" }),
+    orderNumber: integer("orderNumber").notNull()
+});
+
 const insertUser = createInsertSchema(users);
 const selectUser = createSelectSchema(users);
 
@@ -102,6 +109,12 @@ export const selectQualitativeScoreOption = createSelectSchema(qualitativeScoreO
 
 export type InsertQualitativeScoreOption = z.infer<typeof insertQualitativeScoreOption>;
 export type SelectQualitativeScoreOption = z.infer<typeof selectQualitativeScoreOption>;
+
+export const insertTemplateAssessment = createInsertSchema(templateAssessment);
+export const selectTemplateAssessment = createSelectSchema(templateAssessment);
+
+export type InsertTemplateAssessment = z.infer<typeof insertTemplateAssessment>;
+export type SelectTemplateAssessment = z.infer<typeof selectTemplateAssessment>;
 
 export type Schema = {
     users: typeof users;

@@ -161,7 +161,6 @@ export default function QualForm({ handleSuccess }: QualFormProps) {
                                             </Button>
                                         )}
                                     </CardTitle>
-                                    <CardDescription>Card Description</CardDescription>
                                 </CardHeader>
                                 <CardContent className="space-y-4">
                                     <FormField 

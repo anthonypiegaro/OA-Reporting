@@ -1,6 +1,6 @@
 import { DataTable } from "./data-table";
 import { columns } from "./columns";
-import { getAssessments } from "./actions";
+import { getAssessments } from "../actions";
 
 export default async function Page() {
     const data = await getAssessments();

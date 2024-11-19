@@ -32,7 +32,7 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import AddTemplateForm from "./add-template-form";
+import AddTemplateForm from "./add-template-form/add-template-form";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
