@@ -90,8 +90,6 @@ export default function EditQualForm({ data, showToast, handleEditOpenChange }: 
             deletedIds: deletedIds
         }
 
-        console.log(fullyProcessedData);
-
         await editQualitativeAssessment(fullyProcessedData)
         .then(() => {
             showToast({

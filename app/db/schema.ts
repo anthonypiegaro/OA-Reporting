@@ -74,6 +74,46 @@ export const templateAssessment = pgTable("templateAssessment", {
     orderNumber: integer("orderNumber").notNull()
 });
 
+export const evaluations = pgTable("evaluations", {
+    id: serial("id").primaryKey(),
+    userId: integer("userId").notNull().references(() => users.id),
+    name: varchar("name", { length: 1000}).notNull(),
+    description: varchar("description", { length: 5000 }),
+    notes: text("notes"),
+    date: timestamp("date").notNull(),
+    createdAt: timestamp("createdAt").defaultNow().notNull(),
+    updatedAt: timestamp("updatedAt").defaultNow().notNull()
+});
+
+export const evaluationScores = pgTable("evaluationScores", {
+    id: serial("id").primaryKey(),
+    evaluationId: integer("evaluationId").notNull().references(() => evaluations.id, { onDelete: "cascade" }),
+    assessmentId: integer("assessmentId").notNull().references(() => assessments.id),
+    type: assessmentTypeEnum().notNull(),
+    orderNumber: integer("orderNumber").notNull()
+});
+
+export const quantitativeEvaluationScores = pgTable("quantitativeEvaluationScores", {
+    id: serial("id").primaryKey(),
+    evaluationScoreId: integer("evaluationScoreId").notNull().references(() => evaluationScores.id, { onDelete: "cascade" }),
+    score: numeric("score", { precision: 7, scale: 3 }).notNull(),
+});
+
+export const qualitativeEvaluationScores = pgTable("qualitativeEvaluationScores", {
+    id: serial("id").primaryKey(),
+    evaluationScoreId: integer("evaluationScoreId").notNull().references(() => evaluationScores.id, { onDelete: "cascade" }),
+    qualitativeScoreId: integer("qualitativeScoreId").notNull().references(() => qualitativeScoreOptions.id),
+    score: varchar("score", { length: 250 }).notNull(),
+    description: varchar("description", { length: 5000 }),
+    isPassing: boolean("isPassing").default(false).notNull()
+});
+
+export const pdfEvaluationScores = pgTable("pdfEvaluationScores", {
+    id: serial("id").primaryKey(),
+    evaluationScoreId: integer("evaluationScoreId").notNull().references(() => evaluationScores.id, { onDelete: "cascade" }),
+    url: text("url").notNull()
+});
+
 const insertUser = createInsertSchema(users);
 const selectUser = createSelectSchema(users);
 
@@ -115,6 +155,36 @@ export const selectTemplateAssessment = createSelectSchema(templateAssessment);
 
 export type InsertTemplateAssessment = z.infer<typeof insertTemplateAssessment>;
 export type SelectTemplateAssessment = z.infer<typeof selectTemplateAssessment>;
+
+export const insertEvaluation = createInsertSchema(evaluations);
+export const selectEvaluation = createSelectSchema(evaluations);
+
+export type InsertEvaluation = z.infer<typeof insertEvaluation>;
+export type SelectEvaluation = z.infer<typeof selectEvaluation>;
+
+export const insertEvaluationScore = createInsertSchema(evaluationScores);
+export const selectEvaluationScore = createSelectSchema(evaluationScores);
+
+export type InsertEvaluationScore = z.infer<typeof insertEvaluationScore>;
+export type SelectEvaluationScore = z.infer<typeof selectEvaluationScore>;
+
+export const insertQuantitativeEvaluationScore = createInsertSchema(quantitativeEvaluationScores);
+export const selectQuantitativeEvaluationScore = createSelectSchema(quantitativeEvaluationScores);
+
+export type InsertQuantitativeEvaluationScore = z.infer<typeof insertQuantitativeEvaluationScore>;
+export type SelectQuantitativeEvaluationScore = z.infer<typeof selectQuantitativeEvaluationScore>;
+
+export const insertQualitativeEvaluationScore = createInsertSchema(qualitativeEvaluationScores);
+export const selectQualitativeEvaluationScore = createSelectSchema(qualitativeEvaluationScores);
+
+export type InsertQualitativeEvaluationScore = z.infer<typeof insertQualitativeEvaluationScore>;
+export type SelectQualitativeEvaluationScore = z.infer<typeof selectQualitativeEvaluationScore>;
+
+export const insertPdfEvaluationScore = createInsertSchema(pdfEvaluationScores);
+export const selectPdfEvaluationScore = createSelectSchema(pdfEvaluationScores);
+
+export type InsertPdfEvaluationScore = z.infer<typeof insertPdfEvaluationScore>;
+export type SelectPdfEvaluationScore = z.infer<typeof selectPdfEvaluationScore>;
 
 export type Schema = {
     users: typeof users;
