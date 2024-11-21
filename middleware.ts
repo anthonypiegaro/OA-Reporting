@@ -4,7 +4,12 @@ import { NextResponse } from "next/server";
 
 const isPublicRoute = createRouteMatcher(["/sign-in(.*)"]);
 
-const isTrainerRoute = createRouteMatcher(["/dashboard/users", "/dashboard/templates"]);
+const isTrainerRoute = createRouteMatcher([
+  "/dashboard/users",
+  "/dashboard/templates",
+  "/dashboard/assessments",
+  "/dashboard/evaluations"
+]);
 
 export default clerkMiddleware(async (auth, request) => {
   if (isTrainerRoute(request)) {
