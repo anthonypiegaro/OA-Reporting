@@ -1,59 +1,54 @@
 "use client"
 
-import { useQuery } from "@tanstack/react-query";
-
-import { useToast } from "@/hooks/use-toast";
 import {
     Dialog,
     DialogContent,
-    DialogDescription,
-    DialogFooter,
     DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-  } from "@/components/ui/dialog"
+    DialogTitle
+} from "@/components/ui/dialog";
+import { useToast } from "@/hooks/use-toast";
 
-import { getTemplateData } from "../actions/get-template-data";
+import NoTemplateForm from "./no-template-form";
+import TemplateForm from "./template-form";
 import { EvaluationPreFormType } from "../types";
 
 interface AddEvaluationFormProps {
     initialData: EvaluationPreFormType | undefined;
-    handleOpenChanges: (open: boolean) => void;
+    handleOpenChange: (open: boolean) => void;
 }
 
-export default function AddEvaluationForm({ initialData, handleOpenChanges }: AddEvaluationFormProps) {
+export default function AddEvaluationForm({ initialData, handleOpenChange }: AddEvaluationFormProps) {
     const { toast } = useToast();
-    const { data: templateData, isError, error, isLoading } = useQuery({
-        queryKey: ["templateData", initialData?.templateId],
-        queryFn: async () => getTemplateData(initialData?.templateId as number),
-        enabled: initialData?.templateId ? true : false
-    });
+    const formOpen = initialData ? true : false;
 
-    let content = <></>;
-
-    if (isError) {
+    const showToast = (title: string, description: string) => {
         toast({
-            variant: "destructive",
-            title: "Uh oh, an error occured",
-            description: `Error: ${error.message}`
+            title: title,
+            description: description
         });
-        // close the form
     }
 
     return (
-        <Dialog open={initialData ? true : false} onOpenChange={handleOpenChanges}>
-            <DialogContent>
+        <Dialog open={formOpen} onOpenChange={handleOpenChange}>
+            <DialogContent className="h-[90vh] overflow-y-auto scrollbar-hide">
                 <DialogHeader>
-                    <DialogTitle>Evaluation</DialogTitle>
-                    <DialogDescription>
-                        Fill out all required fields. Add assessments with the "Add Assessment" button at the bottom of the form.
-                        Drag and drop to reorder the assessments.
-                    </DialogDescription>
+                    <DialogTitle>Evaluation Form</DialogTitle>
                 </DialogHeader>
                 <div>
-                    Form Content
+                    {initialData?.templateId
+                        ?
+                        <TemplateForm 
+                            userId={initialData.userId} 
+                            date={initialData.date} 
+                            templateId={initialData.templateId}
+                            handleOpenChange={handleOpenChange}
+                            showToast={showToast}
+                        />
+                        :
+                        <NoTemplateForm />
+                    }
                 </div>
             </DialogContent>
         </Dialog>
-    );
+    )
 }

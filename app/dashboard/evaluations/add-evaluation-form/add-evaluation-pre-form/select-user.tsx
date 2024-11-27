@@ -28,7 +28,7 @@ import {
 } from "@/components/ui/popover";
 
 import { getUsers } from "../../actions/get-users";
-import { EvaluationPreFormType } from "./types";
+import { EvaluationPreFormType } from "../types";
 
 interface SelectUserProps {
     field: ControllerRenderProps<EvaluationPreFormType, "userId">;

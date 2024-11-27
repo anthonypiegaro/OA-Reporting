@@ -1,4 +1,4 @@
-import { assessments, SelectQualitativeScoreOption } from "@/app/db/schema";
+import { assessments, SelectAssessment, SelectQualitativeScoreOption } from "@/app/db/schema";
 
 export type EvaluationsType = {
     id: number;
@@ -37,3 +37,80 @@ export type EvaluationFormType = {
     date: Date,
     assessments: (EvaluationQualitativeAssessmentType | EvaluationQuantitativeAssessmentType)[];
 }
+
+export type GetAssessmentsType = (
+    { 
+        id: number; 
+        name: string; 
+        type: "quantitative" | "qualitative" | "pdf"; 
+    } | { 
+        type: "qualitative"; 
+        options: { 
+            id: number; 
+            score: string; 
+            description: string; 
+            isPassing: boolean; 
+        }[]; 
+        id: number; 
+        name: string; 
+    }
+)
+
+
+// Types for the AddEvaluation Action
+
+export type AddEvaluationBaseScore = {
+    assessmentId: number,
+    name: string,
+    orderNumber: number
+};
+
+export type AddEvaluationQuantScore = AddEvaluationBaseScore & { type: "quantitative", score: string };
+
+export type AddEvaluationQualScore = AddEvaluationBaseScore & {
+    type: "qualitative"
+    optionId: number,
+    score: string,
+    description: string,
+    isPassing: boolean
+}
+
+export type AddEvaluationPdfScore = AddEvaluationBaseScore & { type: "pdf", score: File };
+
+export type AddEvaluationAssessmentType = AddEvaluationQuantScore | AddEvaluationQualScore | AddEvaluationPdfScore;
+
+export type AddEvaluationType = {
+    userId: number,
+    date: Date,
+    name: string,
+    description: string,
+    notes: string,
+    assessments: AddEvaluationAssessmentType[]
+};
+
+export type AddEvaluationProcessedQuantScore = {
+    evaluationScoreId: number,
+    score: string
+}
+
+export type AddEvaluationProcessedQualScore = {
+    evaluationScoreId: number,
+    qualitativeScoreId: number,
+    score: string,
+    description: string,
+    isPassing: boolean
+}
+
+export type AddEvaluationProcessedPreUrlPdfScore = {
+    evaluationScoreId: number,
+    score: File
+}
+
+export type AddEvaluationProcessedPdfScore = {
+    evaluationScoreId: number,
+    url: string
+}
+
+export type AddEvaluationProcessedScores = AddEvaluationProcessedPreUrlPdfScore 
+    | AddEvaluationProcessedQualScore 
+    | AddEvaluationProcessedQuantScore;

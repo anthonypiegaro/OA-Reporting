@@ -73,7 +73,11 @@ export function DataTable<TData, TValue>({
   });
 
   const updatePreformData = (values: EvaluationPreFormType) => {
-    setPreformData(values);
+    setPreformData({
+      userId: values.userId,
+      date: values.date,
+      templateId: values.templateId
+    });
   }
 
   const handleOpenFormChange = (open: boolean) => {
@@ -82,13 +86,13 @@ export function DataTable<TData, TValue>({
     }
   }
 
-  const setInitialData = (values: EvaluationPreFormType) => {
-    setPreformData(values);
+  const closeEvalForm = () => {
+    setPreformData(undefined);
   }
 
   return (
     <QueryClientProvider client={queryClient}>
-      <AddEvaluationForm initialData={preformData} handleOpenChanges={handleOpenFormChange} />
+      <AddEvaluationForm initialData={preformData} handleOpenChange={handleOpenFormChange} />
       <div>
         <div className="flex items-center py-4 space-x-1">
           <Input
@@ -99,7 +103,7 @@ export function DataTable<TData, TValue>({
             }
             className="max-w-sm"
           />
-          <AddEvaluationPreForm setData={setInitialData}/>
+          <AddEvaluationPreForm setData={updatePreformData}/>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" className="ml-auto">

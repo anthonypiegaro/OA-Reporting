@@ -28,7 +28,7 @@ import {
 } from "@/components/ui/popover";
 
 import { getTemplates } from "../../actions/get-templates";
-import { EvaluationPreFormType } from "./types";
+import { EvaluationPreFormType } from "../types";
 
 interface SelectTemplateProps {
     field: ControllerRenderProps<EvaluationPreFormType, "templateId">;

@@ -1,6 +1,6 @@
 "use server"
 
-import { eq, inArray } from "drizzle-orm";
+import { asc, eq, inArray } from "drizzle-orm";
 import { db } from "@/app/db/db";
 import { 
     assessments,
@@ -8,11 +8,11 @@ import {
     templates, 
     templateAssessment
 } from "@/app/db/schema";
+import { ActionEvaluationForm } from "../add-evaluation-form/types";
 
-export const getTemplateData = async (id: number) => {
+export const getTemplateData = async (id: number): Promise<ActionEvaluationForm> => {
     const [templateData] = await db
         .select({
-            id: templates.id,
             name: templates.name,
             description: templates.description
         })
@@ -27,7 +27,8 @@ export const getTemplateData = async (id: number) => {
         })
         .from(templateAssessment)
         .innerJoin(assessments, eq(templateAssessment.assessmentId, assessments.id))
-        .where(eq(templateAssessment.templateId, id));
+        .where(eq(templateAssessment.templateId, id))
+        .orderBy(asc(templateAssessment.orderNumber));
     
     // get all qualitative score options for all qualitative assessments
 

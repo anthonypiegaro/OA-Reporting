@@ -22,8 +22,8 @@ import SelectDate from "./select-date";
 import SelectTemplate from "./select-template";
 import SelectUser from "./select-user";
 
-import { evaluationPreFormSchema } from "./schema";
-import { EvaluationPreFormType } from "./types";
+import { evaluationPreFormSchema } from "../schema";
+import { EvaluationPreFormType } from "../types";
 
 interface AddEvaluationPreformProps {
     setData: (values: EvaluationPreFormType) => void;
@@ -34,6 +34,9 @@ export default function AddEvaluationPreForm({ setData }: AddEvaluationPreformPr
     const [open, setOpen] = useState(false);
     const form = useForm<EvaluationPreFormType>({
         resolver: zodResolver(evaluationPreFormSchema),
+        defaultValues: {
+            date: new Date()
+        }
     });
 
     const onSubmit = (values: EvaluationPreFormType) => {
