@@ -35,17 +35,26 @@ export default function AddEvaluationForm({ initialData, handleOpenChange }: Add
                     <DialogTitle>Evaluation Form</DialogTitle>
                 </DialogHeader>
                 <div>
-                    {initialData?.templateId
+                    {initialData
                         ?
-                        <TemplateForm 
-                            userId={initialData.userId} 
-                            date={initialData.date} 
-                            templateId={initialData.templateId}
-                            handleOpenChange={handleOpenChange}
-                            showToast={showToast}
-                        />
+                        initialData.templateId
+                            ?
+                            <TemplateForm 
+                                userId={initialData.userId} 
+                                date={initialData.date} 
+                                templateId={initialData.templateId}
+                                handleOpenChange={handleOpenChange}
+                                showToast={showToast}
+                            />
+                            :
+                            <NoTemplateForm 
+                                userId={initialData.userId} 
+                                date={initialData.date} 
+                                handleOpenChange={handleOpenChange}
+                                showToast={showToast}
+                            />
                         :
-                        <NoTemplateForm />
+                        <></>
                     }
                 </div>
             </DialogContent>

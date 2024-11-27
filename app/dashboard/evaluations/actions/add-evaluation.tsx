@@ -72,6 +72,10 @@ export const addEvaluation = async (data: AddEvaluationType) => {
             date: data.date
         }).returning({ evaluationId: evaluations.id });
 
+        if (data.assessments.length < 1) {
+            return
+        }
+
         const evaluationId = evaluation.evaluationId;
 
         const evaluationScoreValues = data.assessments.map(assessment => ({

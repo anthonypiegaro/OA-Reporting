@@ -50,9 +50,8 @@ export function DataTable<TData, TValue>({
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({
     id: false,
-    name: false,
     description: false,
-    userId: false
+    userId: false,
   });
 
   const table = useReactTable({
@@ -96,10 +95,10 @@ export function DataTable<TData, TValue>({
       <div>
         <div className="flex items-center py-4 space-x-1">
           <Input
-            placeholder="Filter templates..."
-            value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
+            placeholder="Filter users..."
+            value={(table.getColumn("userName")?.getFilterValue() as string) ?? ""}
             onChange={(event) =>
-              table.getColumn("name")?.setFilterValue(event.target.value)
+              table.getColumn("userName")?.setFilterValue(event.target.value)
             }
             className="max-w-sm"
           />
