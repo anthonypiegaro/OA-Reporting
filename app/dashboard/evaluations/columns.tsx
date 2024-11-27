@@ -4,6 +4,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { EvaluationsType } from "./types";
+import ActionDropdown from "./action-dropdown/action-dropdown";
 
 export const columns: ColumnDef<EvaluationsType>[] = [
     {
@@ -56,5 +57,9 @@ export const columns: ColumnDef<EvaluationsType>[] = [
     {
         accessorKey: "description",
         enableHiding: false
+    },
+    {
+        id: "actions",
+        cell: ({ row }) => <ActionDropdown row={row} />
     }
 ]
