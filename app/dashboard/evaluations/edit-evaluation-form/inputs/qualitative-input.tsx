@@ -16,11 +16,11 @@ import {
     SelectValue,
   } from "@/components/ui/select"
 
-import { EvaluationForm, QualitativeOption } from "../types";
+import { EditEvalForm, EditEvalFormQualAssessmentOption } from "../types";
 
 interface QualitativeInputProps {
-    form: UseFormReturn<EvaluationForm, any, undefined>
-    options: QualitativeOption[],
+    form: UseFormReturn<EditEvalForm, any, undefined>
+    options: EditEvalFormQualAssessmentOption[],
     disabled: boolean;
     index: number;
 }
@@ -29,7 +29,7 @@ export default function QualitativeInput({ form, index, options, disabled }: Qua
     const handleSelectChange = (value: string) => {
         const { id, score, description, isPassing } = options.find(option => option.score === value)!;
 
-        form.setValue(`assessments.${index}.qualitativeScoreId`, id);
+        form.setValue(`assessments.${index}.optionId`, id);
         form.setValue(`assessments.${index}.score`, score);
         form.setValue(`assessments.${index}.description`, description);
         form.setValue(`assessments.${index}.isPassing`, isPassing);
@@ -42,7 +42,7 @@ export default function QualitativeInput({ form, index, options, disabled }: Qua
             render={({ field }) => (
                 <FormItem>
                     <FormLabel>Score</FormLabel>
-                    <Select onValueChange={handleSelectChange} disabled={disabled}>
+                    <Select value={form.getValues(`assessments.${index}.score`)} onValueChange={handleSelectChange} disabled={disabled}>
                         <FormControl>
                             <SelectTrigger>
                                 <SelectValue placeholder="Select option..." />

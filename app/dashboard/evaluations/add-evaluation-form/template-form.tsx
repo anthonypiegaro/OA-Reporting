@@ -27,7 +27,6 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { toast, useToast } from "@/hooks/use-toast";
 import { ToastAction } from "@/components/ui/toast";
-import QuantitativeInput from "./Inputs/quantitative-input";
 
 import { EvaluationForm } from "./types";
 import { getTemplateData } from "../actions/get-template-data";
@@ -36,7 +35,6 @@ import QualitativeInput from "./Inputs/qualitative-input";
 import PdfInput from "./Inputs/pdf-input";
 import AddAssessmentButton from "../add-assessment-button/add-assessment-button";
 import { AddEvaluationType, GetAssessmentsType } from "../types";
-import { simulateProcess } from "@/utils/simulateProcess";
 import { addEvaluation } from "../actions/add-evaluation";
 
 interface TemplateFormProps {
@@ -180,7 +178,8 @@ function FormContent({ data, handleOpenChange, showToast }: FormContentProps) {
             append({
                 ...assessment,
                 assessmentId: assessment.id,
-                score: ""
+                score: "",
+                unit: assessment.unit
             })
         } else if (assessment.type === "qualitative") {
             append({
@@ -285,7 +284,16 @@ function FormContent({ data, handleOpenChange, showToast }: FormContentProps) {
                                             control={form.control}
                                             name={`assessments.${index as number}.score`}
                                             render={({ field }) => (
-                                                <QuantitativeInput field={field} disabled={isSubmitting} />
+                                                <FormItem>
+                                                    <FormLabel>Score</FormLabel>
+                                                    <FormControl>
+                                                        <div className="flex flex-row items-center gap-x-4">
+                                                            <Input {...field} type="number" disabled={isSubmitting} />
+                                                            <span>{value.unit}</span>
+                                                        </div>
+                                                    </FormControl>
+                                                    <FormMessage />
+                                                </FormItem>
                                             )}
                                         />
                                     }

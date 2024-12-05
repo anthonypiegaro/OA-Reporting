@@ -14,6 +14,7 @@ const BaseAssessmentSchema = z.object({
   
 const QuantitativeAssessmentSchema = BaseAssessmentSchema.extend({
     score: z.string().min(1, "Score is required"),
+    unit: z.string()
 }).extend({ type: z.literal("quantitative") });
 
 const QualitativeOptionSchema = z.object({

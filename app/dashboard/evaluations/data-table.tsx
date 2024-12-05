@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {
   ColumnDef,
   ColumnFiltersState,
+  Row,
   SortingState,
   VisibilityState,
   flexRender,
@@ -30,9 +31,10 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+
 import AddEvaluationPreForm from "./add-evaluation-form/add-evaluation-pre-form/add-evaluation-pre-form";
 import AddEvaluationForm from "./add-evaluation-form/add-evaluation-form";
-import { EvaluationPreFormType } from "./types";
+import { EvaluationPreFormType, EvaluationsType } from "./types";
 
 const queryClient = new QueryClient();
 
@@ -83,10 +85,6 @@ export function DataTable<TData, TValue>({
     if (!open) {
       setPreformData(undefined);
     }
-  }
-
-  const closeEvalForm = () => {
-    setPreformData(undefined);
   }
 
   return (

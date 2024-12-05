@@ -53,6 +53,11 @@ export type GetAssessmentsType = (
         }[]; 
         id: number; 
         name: string; 
+    } | {
+        type: "quantitative"; 
+        unit: string,
+        id: number; 
+        name: string; 
     }
 )
 

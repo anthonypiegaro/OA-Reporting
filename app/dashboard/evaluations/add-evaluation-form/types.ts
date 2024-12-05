@@ -45,7 +45,8 @@ export type BaseAssessment = {
 }
 
 export type QuantitativeAssessment = BaseAssessment & {
-    score: string | null
+    score: string | null,
+    unit: string
 }
 
 export type QualitativeOption = {

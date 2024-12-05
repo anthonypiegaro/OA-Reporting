@@ -16,6 +16,7 @@ import {
 import { useToast } from "@/hooks/use-toast";
 
 import DeleteEvaluationAlert from "./delete-evaluation-alert";
+import EditEvaluationForm from "../edit-evaluation-form/edit-evaluation-form";
 import { ToastProps } from "@/components/ui/toast";
 import { EvaluationsType } from "../types";
 
@@ -25,12 +26,23 @@ interface ActionDropdownProps {
 
 export default function ActionDropdown({ row }: ActionDropdownProps) {
     const [dropdownOpen, setDropdownOpen] = useState(false);
+    const [editEvalId, setEditEvalId] = useState<number | undefined>();
     const [alertOpen, setAlertOpen] = useState(false);
     const { toast } = useToast();
 
     const showToast = (props: ToastProps) => {
         toast(props);
     };
+
+    const handleEditFormChange = (open: boolean) => {
+        if (!open) {
+            setEditEvalId(undefined);
+        }
+    }
+
+    const closeForm = () => {
+        setEditEvalId(undefined);
+    }
 
     return (
         <>
@@ -42,6 +54,7 @@ export default function ActionDropdown({ row }: ActionDropdownProps) {
                 id={row.getValue("id")}
                 name={row.getValue("name")}
             />
+            <EditEvaluationForm evalId={editEvalId} handleOpenChange={handleEditFormChange} closeForm={closeForm} />
             <DropdownMenu open={dropdownOpen} onOpenChange={setDropdownOpen}>
                 <DropdownMenuTrigger asChild>
                 <Button variant="ghost" className="h-8 w-8 p-0">
@@ -55,7 +68,7 @@ export default function ActionDropdown({ row }: ActionDropdownProps) {
                         Delete
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => setEditEvalId(row.original.id)}>
                         Edit
                     </DropdownMenuItem>
                 </DropdownMenuContent>

@@ -6,7 +6,8 @@ import {
     assessments,
     qualitativeScoreOptions,
     templates, 
-    templateAssessment
+    templateAssessment,
+    quantitativeAssessments
 } from "@/app/db/schema";
 import { ActionEvaluationForm } from "../add-evaluation-form/types";
 
@@ -59,11 +60,34 @@ export const getTemplateData = async (id: number): Promise<ActionEvaluationForm>
         return acc;
     }, {} as Record<number, { id: number, score: string, description: string, isPassing: boolean }[]>);
 
+    const quantIds = assessmentsInTemplate
+        .filter(assess => assess.type === "quantitative")
+        .map(quantAssess => quantAssess.assessmentId);
+
+    const units = await db
+        .select({
+            assessmentId: quantitativeAssessments.assessmentId,
+            unit: quantitativeAssessments.unit
+        })
+        .from(quantitativeAssessments)
+        .where(inArray(quantitativeAssessments.assessmentId, quantIds));
+
+    const unitsHashmap = units.reduce((acc, assessment) => {
+        acc[assessment.assessmentId] = assessment.unit;
+
+        return acc;
+    }, {} as Record<number, string>);
+
     const assessmentsWithOptions = assessmentsInTemplate.map(assessment => {
         if (assessment.type === "qualitative") {
             return {
                 ...assessment,
                 options: optionsByAssessment[assessment.assessmentId]
+            }
+        } else if (assessment.type === "quantitative") {
+            return {
+                ...assessment,
+                unit: unitsHashmap[assessment.assessmentId]
             }
         }
 

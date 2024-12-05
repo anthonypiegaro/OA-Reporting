@@ -26,7 +26,6 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { toast, useToast } from "@/hooks/use-toast";
 import { ToastAction } from "@/components/ui/toast";
-import QuantitativeInput from "./Inputs/quantitative-input";
 
 import { EvaluationForm } from "./types";
 import { EvaluationFormSchema } from "./schema";
@@ -122,7 +121,8 @@ export default function NoTemplateForm({ userId, date, handleOpenChange, showToa
             append({
                 ...assessment,
                 assessmentId: assessment.id,
-                score: ""
+                score: "",
+                unit: assessment.unit
             })
         } else if (assessment.type === "qualitative") {
             append({
@@ -224,12 +224,21 @@ export default function NoTemplateForm({ userId, date, handleOpenChange, showToa
                                 <CardContent>
                                     {value.type === "quantitative" && 
                                         <FormField 
-                                            control={form.control}
-                                            name={`assessments.${index as number}.score`}
-                                            render={({ field }) => (
-                                                <QuantitativeInput field={field} disabled={isSubmitting} />
-                                            )}
-                                        />
+                                        control={form.control}
+                                        name={`assessments.${index as number}.score`}
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel>Score</FormLabel>
+                                                <FormControl>
+                                                    <div className="flex flex-row items-center gap-x-4">
+                                                        <Input {...field} type="number" disabled={isSubmitting} />
+                                                        <span>{value.unit}</span>
+                                                    </div>
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
                                     }
                                     {value.type === "qualitative" &&
                                         <QualitativeInput  
