@@ -4,7 +4,7 @@ import { auth, clerkClient } from "@clerk/nextjs/server";
 import { revalidatePath } from "next/cache";
 import { eq } from "drizzle-orm";
 import { db } from "@/app/db/db";
-import { assessments, quantitativeAssessments } from "@/app/db/schema";
+import { assessments, InsertAssessment, InsertQuantitativeAssessment, quantitativeAssessments } from "@/app/db/schema";
 import { validateTrainerAuthorization } from "@/components/utility/athorization/validate-trainer";
 import { ProcessedEditQuantData } from "../types/edit-quant-type";
 
@@ -18,19 +18,21 @@ export const editQuantitativeAssessment = async (data: ProcessedEditQuantData) =
     await validateTrainerAuthorization(client, userId);
 
     // split data into the two different models
-    const assessmentData = {
+    const assessmentData: Partial<InsertAssessment> = {
         updatedAt: new Date()
     }
 
-    for (const field of assessmentFields) {
-        if (data?[field] : false) assessmentData[field] = data[field];
-    }
+    if (data.name) assessmentData.name = data.name;
+    if (data.description) assessmentData.description = data.description;
+    if (data.url) assessmentData.url = data.url;
 
-    const quantData = {};
+    const quantData: Partial<InsertQuantitativeAssessment> = {};
 
-    for (const field of quantFields) {
-        if (data?[field] : false) quantData[field] = data[field];
-    }
+    if (data.comparativeScore) quantData.comparativeScore = data.comparativeScore;
+    if (data.unit) quantData.unit = data.unit;
+    if (data.comparisonType) quantData.comparisonType = data.comparisonType;
+    if (data.failDescription) quantData.failDescription = data.failDescription;
+    if (data.passDescription) quantData.passDescription = data.passDescription;
 
     console.log("Assess:", assessmentData);
     console.log("Quant:", quantData);
@@ -38,7 +40,9 @@ export const editQuantitativeAssessment = async (data: ProcessedEditQuantData) =
     await db.transaction(async (tsx) => {
         await tsx.update(assessments).set(assessmentData).where(eq(assessments.id, data.id));
 
-        await tsx.update(quantitativeAssessments).set(quantData).where(eq(quantitativeAssessments.id, data.quantitativeId));
+        if (Object.keys(quantData).length > 0) {
+            await tsx.update(quantitativeAssessments).set(quantData).where(eq(quantitativeAssessments.id, data.quantitativeId));
+        }
     });
 
     revalidatePath("/dashboard/assessments");

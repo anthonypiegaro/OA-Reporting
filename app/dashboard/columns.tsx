@@ -5,6 +5,7 @@ import { format } from "date-fns-tz";
 import { SelectEvaluation } from "../db/schema";
 import { Button } from "@/components/ui/button";
 import { ArrowUpDown } from "lucide-react";
+import ActionDropdown from "./action-dropdown";
 
 export const columns: ColumnDef<SelectEvaluation>[] = [
     {

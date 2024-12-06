@@ -23,7 +23,9 @@ export const editTemplate = async (data: EditTemplateType) => {
             orderNumber: index
         }));
 
-        await tsx.insert(templateAssessment).values(assessments);
+        if (assessments.length > 0) {
+            await tsx.insert(templateAssessment).values(assessments);
+        }
 
         await tsx.update(templates).set({
             name: data.name,
