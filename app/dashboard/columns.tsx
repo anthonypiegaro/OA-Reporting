@@ -79,6 +79,10 @@ export const columns: ColumnDef<SelectEvaluation>[] = [
     },
     {
         id: "actions",
-        cell: ({ row }) => <ActionDropdown row={row} />
+        cell: ({ row }) => (
+            <div className="flex justify-end pr-2">
+                <ActionDropdown row={row} />
+            </div>
+        )
     }
 ]

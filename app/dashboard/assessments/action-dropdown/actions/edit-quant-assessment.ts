@@ -8,9 +8,6 @@ import { assessments, InsertAssessment, InsertQuantitativeAssessment, quantitati
 import { validateTrainerAuthorization } from "@/components/utility/athorization/validate-trainer";
 import { ProcessedEditQuantData } from "../types/edit-quant-type";
 
-const assessmentFields = ["name", "description", "url"];
-const quantFields = ["comparativeScore", "unit", "comparisonType", "failDescription", "passDescription"];
-
 export const editQuantitativeAssessment = async (data: ProcessedEditQuantData) => {
     const { userId } = await auth();
     const client = await clerkClient();

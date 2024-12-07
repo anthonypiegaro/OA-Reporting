@@ -18,7 +18,7 @@ export default function Layout({ children }: Readonly<{
                 <ColorThemeToggleButton />
                 <AppBreadcrumb />
             </div>
-            <main className="flex flex-col flex-1">
+            <main className="flex flex-col flex-1 overflow-y-auto scrollbar-hide">
               {children}
             </main>
           </div>
