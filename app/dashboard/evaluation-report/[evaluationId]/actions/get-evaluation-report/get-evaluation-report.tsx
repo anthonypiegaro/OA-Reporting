@@ -85,7 +85,9 @@ export const getEvaluationReport = async (evaluationId: number): Promise<Evaluat
                 id: evaluations.id,
                 userId: evaluations.userId,
                 userName: users.name,
+                playingLevel: users.playingLevel,
                 date: evaluations.date,
+                lastUpdated: evaluations.updatedAt,
                 evaluationName: evaluations.name,
                 description: evaluations.description,
                 notes: evaluations.notes

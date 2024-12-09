@@ -30,7 +30,7 @@ const chartConfig = {
       label: "Safari",
       color: "hsl(var(--chart-2))",
     },
-  } satisfies ChartConfig
+} satisfies ChartConfig
 
 interface OverallScoreProps {
     totalScoredAssessments: number,
