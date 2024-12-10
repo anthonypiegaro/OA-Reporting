@@ -1,5 +1,5 @@
 export default function Loading() {
     return (
-        <div>Loading Report...</div>
+        <div>Loading Templates...</div>
     )
 }
