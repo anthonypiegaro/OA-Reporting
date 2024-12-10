@@ -37,6 +37,7 @@ export type PdfAssessment = {
     name: string,
     description: string,
     url: string,
+    pdfUrl: string,
     orderNumber: number
 }
 

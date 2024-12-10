@@ -52,7 +52,7 @@ const getQualData = async (qualIds: number[]): Promise<QualData[]> => await db
 
 const getPdfData = async (pdfIds: number[]): Promise<PdfData[]> => await db
         .select({
-            evaluationScoreId: pdfEvaluationScores.id,
+            evaluationScoreId: pdfEvaluationScores.evaluationScoreId,
             pdfUrl: pdfEvaluationScores.url
         })
         .from(pdfEvaluationScores)
@@ -157,7 +157,7 @@ export const getEvaluationReport = async (evaluationId: number): Promise<Evaluat
         }
 
         return assessmentDataCombined;
-    })
+    });
 
     return {
         ...evaluation,

@@ -11,7 +11,7 @@ import {
 
 } from "@/components/ui/card";
 
-interface EvaluationReportHeaderProps {
+interface EvaluationReportMetaDataProps {
     evaluationName: string;
     userName: string;
     playingLevel: string;
@@ -19,7 +19,7 @@ interface EvaluationReportHeaderProps {
     date: Date;
 }
 
-export default function EvaluationReportHeader({ evaluationName, userName, playingLevel, description, date }: EvaluationReportHeaderProps) {
+export default function EvaluationReportMetaData({ evaluationName, userName, playingLevel, description, date }: EvaluationReportMetaDataProps) {
     return (
         <Card className="max-w-md">
             <CardHeader>

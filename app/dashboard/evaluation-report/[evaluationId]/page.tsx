@@ -1,9 +1,12 @@
 import { redirect } from "next/navigation";
 
+import EvaluationReportHeader from "./data-visualizations/evaluation-report-header/evaluation-report-header";
+import EvaluationReportMetaData from "./evaluation-report-metadata/evaluation-report-metadata";
 import OverallScore from "./data-visualizations/overall-score/overall-score";
-import EvaluationReportHeader from "./evaluation-report-header/evaluation-report-header";
 import EvaluationReportTrainerNotes from "./evaluation-report-trainer-notes/evaluation-report-trainer-notes";
 import QuantScore from "./data-visualizations/quant-score/quant-score";
+import QualScore from "./data-visualizations/qual-score/qual-score";
+import PdfScore from "./data-visualizations/pdf-score/pdf-score";
 
 import { isAllowedToView } from "./actions/is-allowed-to-view";
 import { getEvaluationReport } from "./actions/get-evaluation-report/get-evaluation-report";
@@ -39,9 +42,9 @@ export default async function Page({
     });
 
     return (
-        <div className="flex flex-1 flex-col p-1">
-            <div className="flex flex-row justify-center items-start gap-x-4 gap-y-4 flex-wrap">
-                <EvaluationReportHeader 
+        <div className="flex flex-1 flex-col gap-y-8 max-w-full box-border">
+            <EvaluationReportHeader>
+                <EvaluationReportMetaData
                     evaluationName={evaluationReportData.evaluationName}
                     userName={evaluationReportData.userName ?? ""}
                     playingLevel={evaluationReportData.playingLevel ?? ""}
@@ -56,39 +59,52 @@ export default async function Page({
                     totalPassingAssessments={totalPassingAssessments}
                     totalScoredAssessments={totalScoredAssessments}
                 />
-            </div>
-            <div className="flex flex-row gap-x-4 gap-y-4 flex-wrap">
-                <QuantScore 
-                    name="Max Bench Press"
-                    description="The max bench press assesses the athletes upper body strength capacity. Correlated with fastabll velocity."
-                    unit="lbs"
-                    score={removeTrailingZeros("320.000")}
-                    standard={removeTrailingZeros("315.000")}
-                    isPassing={true}
-                    failDescription="The athlete needs to improve upper body strength. This may be a point of focus if wanting to increase fastball velocity"
-                    passDescription="The athlete has shown adequate upper body strength. Maintain and may want to focus on other aspects of training"
-                />
-                <QuantScore 
-                    name="Max Bench Press"
-                    description="The max bench press assesses the athletes upper body strength capacity. Correlated with fastabll velocity."
-                    unit="lbs"
-                    score={removeTrailingZeros("275.000")}
-                    standard={removeTrailingZeros("315.000")}
-                    isPassing={false}
-                    failDescription="The athlete needs to improve upper body strength. This may be a point of focus if wanting to increase fastball velocity.
-                    The athlete needs to improve upper body strength. This may be a point of focus if wanting to increase fastball velocity"
-                    passDescription="The athlete has shown adequate upper body strength. Maintain and may want to focus on other aspects of training"
-                />
-                <QuantScore 
-                    name="Max Bench Press"
-                    description="The max bench press assesses the athletes upper body strength capacity. Correlated with fastabll velocity."
-                    unit="lbs"
-                    score={removeTrailingZeros("475.205")}
-                    standard={removeTrailingZeros("315.000")}
-                    isPassing={true}
-                    failDescription="The athlete needs to improve upper body strength. This may be a point of focus if wanting to increase fastball velocity"
-                    passDescription="The athlete has shown adequate upper body strength. Maintain and may want to focus on other aspects of training"
-                />
+            </EvaluationReportHeader>
+            <div className="pb-4">
+                <h2 className="font-semibold leading-none tracking-tight text-xl mb-4 pl-4">Assessments</h2>
+                <div className="flex flex-row flex-wrap justify-center gap-x-4 gap-y-4 w-full">
+                    {
+                        evaluationReportData.assessments.map(assessment => {
+                            if (assessment.type === "quantitative") {
+                                return (
+                                    <QuantScore
+                                        key={assessment.id}
+                                        name={assessment.name}
+                                        description={assessment.description}
+                                        url={assessment.url}
+                                        score={removeTrailingZeros(assessment.score)}
+                                        standard={removeTrailingZeros(assessment.passingScore)}
+                                        unit={assessment.unit}
+                                        isPassing={assessment.isPassing}
+                                        failDescription={assessment.failDescription}
+                                        passDescription={assessment.passDescription}
+                                    />
+                                )
+                            } else if (assessment.type === "qualitative") {
+                                return (
+                                    <QualScore
+                                        key={assessment.id}
+                                        name={assessment.name}
+                                        url={assessment.url}
+                                        description={assessment.description}
+                                        score={assessment.score}
+                                        isPassing={assessment.isPassing}
+                                        scoreDescription={assessment.scoreDescription}
+                                    />
+                                )
+                            } else if (assessment.type === "pdf") {
+                                return (
+                                    <PdfScore 
+                                        key={assessment.id}
+                                        name={assessment.name}
+                                        description={assessment.description}
+                                        url={assessment.pdfUrl}
+                                    />
+                                )
+                            }
+                        })
+                    }
+                </div>
             </div>
         </div>
     );
