@@ -53,7 +53,7 @@ export const columns: ColumnDef<EvaluationsType>[] = [
         },
         cell: ({ row }) => {
             const rawDate = row.original.date;
-            return format(new Date(rawDate), "MM/dd/yyyy")
+            return format(new Date(rawDate), "MM/dd/yyyy");
         },
         visibilityName: "Date",
     },

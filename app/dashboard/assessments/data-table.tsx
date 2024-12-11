@@ -106,7 +106,7 @@ export function DataTable<TData, TValue>({
                         column.toggleVisibility(!!value)
                       }
                     >
-                      {column.id}
+                      {column.columnDef.visibilityName}
                     </DropdownMenuCheckboxItem>
                   )
                 })}

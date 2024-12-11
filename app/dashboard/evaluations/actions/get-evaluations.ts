@@ -1,6 +1,6 @@
 "use server"
 
-import { eq } from "drizzle-orm";
+import { desc, eq } from "drizzle-orm";
 import { db } from "@/app/db/db";
 import { evaluations, users } from "@/app/db/schema";
 import { EvaluationsType } from "../types";
@@ -16,4 +16,5 @@ export const getEvaluations = async (): Promise<EvaluationsType[]> => await db
         updatedAt: evaluations.updatedAt
     })
     .from(evaluations)
-    .innerJoin(users, eq(users.id, evaluations.userId));
+    .innerJoin(users, eq(users.id, evaluations.userId))
+    .orderBy(desc(evaluations.createdAt));
