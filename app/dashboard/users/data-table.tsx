@@ -47,7 +47,7 @@ export function DataTable<TData, TValue>({
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({
     id: false,
-    clerkId: false
+    clerkId: false,
   });
 
   const table = useReactTable({
@@ -101,7 +101,7 @@ export function DataTable<TData, TValue>({
                       column.toggleVisibility(!!value)
                     }
                   >
-                    {column.id}
+                    {column.columnDef.visibleName}
                   </DropdownMenuCheckboxItem>
                 )
               })}

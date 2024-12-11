@@ -30,11 +30,6 @@ export default async function AppSidebarContent() {
                 icon: ClipboardPenLine,
             },
             {
-              title: "Users",
-              url: "/dashboard/users",
-              icon: User,
-            },
-            {
                 title: "Templates",
                 url: "/dashboard/templates",
                 icon: ScrollText,
@@ -43,6 +38,11 @@ export default async function AppSidebarContent() {
                 title: "Assessments",
                 url: "/dashboard/assessments",
                 icon: Dumbbell,
+            },
+            {
+                title: "Users",
+                url: "/dashboard/users",
+                icon: User,
             },
         ]
     } else {

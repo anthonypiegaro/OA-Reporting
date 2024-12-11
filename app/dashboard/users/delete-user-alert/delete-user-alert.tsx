@@ -14,29 +14,32 @@ import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { ToastAction, ToastProps } from "@/components/ui/toast";
 
-import { deleteEvaluation } from "../actions/delete-evaluation";
+import { deleteUser } from "./action";
 
 interface HideAssessmentAlertProps {
-    closeDropdown: () => void;
     alertOpen: boolean;
     setAlertOpen: React.Dispatch<React.SetStateAction<boolean>>;
     showToast: (props: ToastProps) => void;
     id: number;
+    clerkId: string,
     name: string;
 }
 
-export default function DeleteEvaluationAlert({ alertOpen, setAlertOpen, closeDropdown, showToast, id, name }: HideAssessmentAlertProps) {
+export default function DeleteUserAlert({ alertOpen, setAlertOpen, showToast, id, clerkId, name }: HideAssessmentAlertProps) {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const { toast } = useToast();
     
     const onHideRequest = async (id: number) => {
         setIsSubmitting(true);
 
-        await deleteEvaluation(id)
+        await deleteUser({
+                id: id,
+                clerkId: clerkId
+            })
             .then(() => {
                 showToast({
                     title: "Success",
-                    description: `${name} evaluation has been hidden successfully`
+                    description: `${name} profile has been deleted successfully`
                 })
                 setAlertOpen(false);
             })
@@ -55,9 +58,6 @@ export default function DeleteEvaluationAlert({ alertOpen, setAlertOpen, closeDr
 
     const handleOpenChange = (open: boolean) => {
         setAlertOpen(open);
-        if (!open) {
-            closeDropdown();
-        }
     }
     
     return (
@@ -67,13 +67,13 @@ export default function DeleteEvaluationAlert({ alertOpen, setAlertOpen, closeDr
                 <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
                 <AlertDialogDescription>
                     This action cannot be undone. 
-                    This will permanently delete this evaluation from all databases.
+                    This will permanently delete this user from all databases.
                 </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
                 <AlertDialogCancel disabled={isSubmitting}>Cancel</AlertDialogCancel>
                 <Button variant="destructive" disabled={isSubmitting} onClick={() => onHideRequest(id)}>
-                    {isSubmitting ? "Deleting evaluation..." : "Continue"}
+                    {isSubmitting ? "Deleting user..." : "Continue"}
                 </Button>
                 </AlertDialogFooter>
             </AlertDialogContent>

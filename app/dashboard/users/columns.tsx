@@ -20,23 +20,27 @@ export const columns: ColumnDef<SelectUser>[] = [
                     <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
             )
-        }
+        },
+        visibleName: "Name"
     },
     {
         accessorKey: "email",
-        header: "Email"
+        header: "Email",
+        visibleName: "Email"
     },
     {
         accessorKey: "playingLevel",
-        header: "Playing Level"
+        header: "Playing Level",
+        visibleName: "Playing Level"
     },
     {
         accessorKey: "role",
-        header: "Role"
+        header: "Role",
+        visibleName: "Role"
     },
     {
         accessorKey: "id",
-        enableHiding: false
+        enableHiding: false,
     },
     {
         accessorKey: "clerkId",
@@ -44,6 +48,7 @@ export const columns: ColumnDef<SelectUser>[] = [
     },
     {
         id: "actions",
-        cell: ({ row }) => <EditUserDropdown row={row} />
+        cell: ({ row }) => <EditUserDropdown row={row} />,
+        enableHiding: false
     }
 ]
