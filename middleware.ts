@@ -1,8 +1,7 @@
-import { RedirectToSignIn } from "@clerk/nextjs";
 import { clerkClient, clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 
-const isPublicRoute = createRouteMatcher(["/sign-in(.*)"]);
+const isPublicRoute = createRouteMatcher(["/sign-in(.*)", "/"]);
 
 const isTrainerRoute = createRouteMatcher([
   "/dashboard/users",

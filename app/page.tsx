@@ -1,7 +1,14 @@
-export default function Home() {
+import NavBar from "@/components/landing-page/nav-bar/nav-bar";
+import Hero from "@/components/landing-page/hero/hero";
+import LogoTicker from "@/components/landing-page/logo-ticker/logo-ticker";
+
+export default function Page() {
   return (
-    <div>
-      Main Page
+    <div className="w-full max-w-[100vw]">
+      <NavBar />
+      <Hero />
+      <LogoTicker />
+      <footer className="h-10"></footer>
     </div>
   );
 }
