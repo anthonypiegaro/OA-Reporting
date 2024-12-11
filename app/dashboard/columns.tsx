@@ -83,6 +83,7 @@ export const columns: ColumnDef<SelectEvaluation>[] = [
             <div className="flex justify-end pr-2">
                 <ActionDropdown row={row} />
             </div>
-        )
+        ),
+        enableHiding: false
     }
 ]
