@@ -1,7 +1,7 @@
 "use client";
 
-import Link from "next/link"
-import { useUser, SignOutButton } from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
+import { useUser, useClerk } from "@clerk/nextjs";
 import { ChevronUp, User2 } from "lucide-react"
 import {
   Sidebar,
@@ -10,7 +10,6 @@ import {
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
-  SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
@@ -26,6 +25,13 @@ import React from "react";
 export function AppSidebar({ children }: {children: React.ReactNode}) {
   const { user } = useUser();
   const name = user?.publicMetadata.name;
+  const { signOut } = useClerk();
+  const router = useRouter();
+
+  const handleSignOut = () => {
+    signOut();
+    router.push('/');
+  }
 
   return (
     <Sidebar variant="floating" collapsible="icon">
@@ -53,13 +59,9 @@ export function AppSidebar({ children }: {children: React.ReactNode}) {
                   side="top"
                   className="w-[--radix-popper-anchor-width]"
                 >
-                  <SignOutButton redirectUrl="/sign-in">
-                    <DropdownMenuItem>
-                      <span>
-                        Sign Out
-                      </span>
-                    </DropdownMenuItem>
-                  </SignOutButton>
+                  <DropdownMenuItem onClick={handleSignOut}>
+                    <span>Sign Out</span>
+                  </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
             </SidebarMenuItem>
