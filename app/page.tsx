@@ -4,7 +4,7 @@ import LogoTicker from "@/components/landing-page/logo-ticker/logo-ticker";
 
 export default function Page() {
   return (
-    <div className="w-full max-w-[100vw]">
+    <div className="w-full max-w-[100vw] overflow-y-auto scrollbar-hide">
       <NavBar />
       <Hero />
       <LogoTicker />

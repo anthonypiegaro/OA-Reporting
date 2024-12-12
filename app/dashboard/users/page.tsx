@@ -1,8 +1,9 @@
 import { SelectUser, users } from "@/app/db/schema";
 import { DataTable } from "./data-table";
 import { columns } from "./columns";
-import { getUsers } from "@/app/db/queries/GetUsers/get-users";
+import { getUsers } from "@/app/db/queries/get-users/get-users";
 import UserPlayingLevelDist from "./analytics/user-playing-level-dist";
+import { NewUsersByMonth } from "./analytics/new-users-by-month/new-users-by-month";
 
 
 async function getData(): Promise<SelectUser[]> {
@@ -31,8 +32,9 @@ export default async function Page() {
 
     return (
         <div className="flex flex-col flex-1">
-            <div className="flex flex-row">
+            <div className="flex flex-row flex-wrap gap-x-4 gap-y-4 justify-center">
                 <UserPlayingLevelDist data={playingLevelDistData} totalAthletes={data.length}/>
+                <NewUsersByMonth />
             </div>
             <div className="container mx-auto py-10">
                 <DataTable columns={columns} data={data} />
