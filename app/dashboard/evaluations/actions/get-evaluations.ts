@@ -12,6 +12,7 @@ export const getEvaluations = async (): Promise<EvaluationsType[]> => await db
         description: evaluations.description,
         userId: evaluations.userId,
         userName: users.name,
+        playingLevel: users.playingLevel,
         date: evaluations.date,
         updatedAt: evaluations.updatedAt
     })

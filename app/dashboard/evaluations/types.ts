@@ -1,4 +1,4 @@
-import { assessments, SelectAssessment, SelectQualitativeScoreOption } from "@/app/db/schema";
+import { assessments, SelectUser, SelectQualitativeScoreOption } from "@/app/db/schema";
 
 export type EvaluationsType = {
     id: number;
@@ -6,6 +6,7 @@ export type EvaluationsType = {
     description: string | null;
     userId: number;
     userName: string;
+    playingLevel: SelectUser["playingLevel"],
     date: Date;
     updatedAt: Date;
 }
