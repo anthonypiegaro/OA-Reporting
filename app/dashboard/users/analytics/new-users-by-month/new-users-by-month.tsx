@@ -20,6 +20,7 @@ import {
 import { DropdownMenuCheckboxItemProps } from "@radix-ui/react-dropdown-menu";
 import DropdownSelect from "./dropdown-select";
 import { getTrendMessage } from "./utils/get-new-user-trend-data";
+import { MonthlyUserData } from "./types";
 
 const chartData = [
   { month: "Jun 23", highSchool: 90, college: 110, professional: 14 },
@@ -56,12 +57,16 @@ const chartConfig = {
 
 type Checked = DropdownMenuCheckboxItemProps["checked"];
 
-export function NewUsersByMonth() {
+interface NewUsersByMonthProps {
+  newUsersByMonth: MonthlyUserData[]
+}
+
+export function NewUsersByMonth({ newUsersByMonth }: NewUsersByMonthProps) {
   const [showHighSchool, setShowHighSchool] = useState<Checked>(true);
   const [showCollege, setShowCollege] = useState<Checked>(true);
   const [showProfessional, setShowProfessional] = useState<Checked>(true);
 
-  const processedData = chartData.map(monthData => {
+  const processedData = newUsersByMonth.map(monthData => {
     let athletes = 0;
 
     if (showHighSchool) athletes += monthData.highSchool;
@@ -155,7 +160,7 @@ export function NewUsersByMonth() {
             setShowProfessional={setShowProfessional}
           />
         </CardTitle>
-        <CardDescription>{`${chartData[0].month} - ${chartData[11].month}`}</CardDescription>
+        <CardDescription>{`${processedData[0].month} - ${processedData[11].month}`}</CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig} className="w-full h-[150px] md:w-[500px] lg:w-[600px]">

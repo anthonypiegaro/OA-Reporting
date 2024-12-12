@@ -1,9 +1,6 @@
-export type NewUsersMonth = {
+export type MonthlyUserData = {
     month: string,
-    athletes: number,
     highSchool: number,
     college: number,
     professional: number
 };
-
-export type NewUsersByMonthData = NewUsersMonth[];
