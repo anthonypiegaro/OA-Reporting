@@ -22,7 +22,7 @@ export default async function Page() {
     }, [
         { playingLevel: "high school", count: 0 },
         { playingLevel: "college", count: 0 },
-        { playingLevel: "profrssional", count: 0 }
+        { playingLevel: "professional", count: 0 }
     ] as { playingLevel: SelectUser["playingLevel"], count: number }[]);
 
     const newUsersByMonthData = getMonthlyUserData(data);

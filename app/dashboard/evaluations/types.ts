@@ -9,6 +9,7 @@ export type EvaluationsType = {
     playingLevel: SelectUser["playingLevel"],
     date: Date;
     updatedAt: Date;
+    createdAt: Date;
 }
 
 export type EvaluationPreFormType = {

@@ -14,7 +14,8 @@ export const getEvaluations = async (): Promise<EvaluationsType[]> => await db
         userName: users.name,
         playingLevel: users.playingLevel,
         date: evaluations.date,
-        updatedAt: evaluations.updatedAt
+        updatedAt: evaluations.updatedAt,
+        createdAt: evaluations.createdAt
     })
     .from(evaluations)
     .innerJoin(users, eq(users.id, evaluations.userId))

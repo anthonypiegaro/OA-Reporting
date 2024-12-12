@@ -13,11 +13,12 @@ import {
 import {
   ChartConfig,
   ChartContainer,
+  ChartLegend,
+  ChartLegendContent,
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart"
 import { SelectUser } from "@/app/db/schema"
-import { distance } from "framer-motion"
 
 const chartConfig = {
   count: {
@@ -60,7 +61,7 @@ export default function UserPlayingLevelDist({ data, totalAthletes }: UserPlayin
         <CardTitle>Athlete Playing Level Distribution</CardTitle>
         <CardDescription>All Athletes</CardDescription>
       </CardHeader>
-      <CardContent className="flex-1 pb-0">
+      <CardContent className="flex-1 py-2">
         <ChartContainer
           config={chartConfig}
           className="mx-auto aspect-square max-h-[250px]"
@@ -75,7 +76,8 @@ export default function UserPlayingLevelDist({ data, totalAthletes }: UserPlayin
               dataKey="count"
               nameKey="playingLevel"
               innerRadius={60}
-              strokeWidth={5}
+              outerRadius={85}
+              strokeWidth={25}
             >
               <Label
                 content={({ viewBox }) => {
@@ -107,6 +109,10 @@ export default function UserPlayingLevelDist({ data, totalAthletes }: UserPlayin
                 }}
               />
             </Pie>
+            <ChartLegend
+              content={<ChartLegendContent nameKey="playingLevel" />}
+              className="flex flex-row flex-wrap"
+            />
           </PieChart>
         </ChartContainer>
       </CardContent>

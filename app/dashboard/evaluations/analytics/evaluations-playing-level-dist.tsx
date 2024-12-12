@@ -18,47 +18,47 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart"
-import { SelectAssessment } from "@/app/db/schema"
+import { SelectUser } from "@/app/db/schema"
 
 const chartConfig = {
   count: {
     label: "Count",
   },
-  "quantitative": {
-    label: "Quantitative",
+  "high school": {
+    label: "High School",
     color: "hsl(var(--chart-6))",
   },
-  qualitative: {
-    label: "Qualitative",
+  college: {
+    label: "College",
     color: "hsl(var(--chart-7))",
   },
-  pdf: {
-    label: "Pdf",
+  professional: {
+    label: "Professional",
     color: "hsl(var(--chart-8))",
   },
 } satisfies ChartConfig
 
-export type AssessmentDistType = {
-  assessmentType: SelectAssessment["type"],
+type data = {
+  playingLevel: SelectUser["playingLevel"],
   count: number,
 }
 
-interface AssessmentTypeDistProps {
-  data: AssessmentDistType[];
-  totalAssessments: number;
+interface EvaluationsPlayingLevelDistProps {
+  data: data[];
+  totalEvaluations: number;
 }
 
-export default function AssessmentTypeDist({ data, totalAssessments }: AssessmentTypeDistProps) {
+export default function EvaluationsPlayingLevelDist({ data, totalEvaluations }: EvaluationsPlayingLevelDistProps) {
   const coloredData = data.map(dist => ({
     ...dist,
-    fill: chartConfig[dist.assessmentType]?.color || "gray"
+    fill: chartConfig[dist.playingLevel]?.color || "gray"
   }));
 
   return (
     <Card className="flex flex-col">
       <CardHeader className="items-center pb-0">
-        <CardTitle>Assessment Type Distribution</CardTitle>
-        <CardDescription>All Assessments</CardDescription>
+        <CardTitle>Evaluation's Playing Level Distribution</CardTitle>
+        <CardDescription>All Evaluations</CardDescription>
       </CardHeader>
       <CardContent className="flex-1 py-2">
         <ChartContainer
@@ -73,7 +73,7 @@ export default function AssessmentTypeDist({ data, totalAssessments }: Assessmen
             <Pie
               data={coloredData}
               dataKey="count"
-              nameKey="assessmentType"
+              nameKey="playingLevel"
               innerRadius={60}
               outerRadius={85}
               strokeWidth={25}
@@ -93,14 +93,14 @@ export default function AssessmentTypeDist({ data, totalAssessments }: Assessmen
                           y={viewBox.cy}
                           className="fill-foreground text-3xl font-bold"
                         >
-                          {totalAssessments.toLocaleString()}
+                          {totalEvaluations.toLocaleString()}
                         </tspan>
                         <tspan
                           x={viewBox.cx}
                           y={(viewBox.cy || 0) + 24}
                           className="fill-muted-foreground"
                         >
-                          Assessments
+                          Evaluations
                         </tspan>
                       </text>
                     )
@@ -109,8 +109,8 @@ export default function AssessmentTypeDist({ data, totalAssessments }: Assessmen
               />
             </Pie>
             <ChartLegend
-              content={<ChartLegendContent nameKey="assessmentType" />}
-              className="flex flex-row"
+              content={<ChartLegendContent nameKey="playingLevel" />}
+              className="flex flex-row flex-wrap"
             />
           </PieChart>
         </ChartContainer>
