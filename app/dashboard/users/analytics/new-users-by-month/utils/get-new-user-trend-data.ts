@@ -1,4 +1,4 @@
-import { NewUsersByMonthData } from "../types"
+import { MonthlyUserData } from "../types"
 
 export const getTrendMessage = ({
     includeHighSchool,
@@ -9,14 +9,8 @@ export const getTrendMessage = ({
     includeHighSchool: boolean,
     includeCollege: boolean,
     includeProfessional: boolean,
-    data: NewUsersByMonthData
+    data: MonthlyUserData[]
 }) => {
-    // Returns the percent trand of current month compared to last
-    // month, for the specified group(s)
-
-    // Note if previous month was 0, we change the wording to absolute gain
-    // in users
-
     let previousMonth = 0;
     let currentMonth = 0;
 
