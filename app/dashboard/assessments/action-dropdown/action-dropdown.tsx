@@ -85,7 +85,6 @@ export default function ActionDropdown({ row }: ActionDropdownProps) {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
-          <DropdownMenuLabel>Actions</DropdownMenuLabel>
           <DropdownMenuItem className="text-destructive" onClick={() => setHideAlertOpen(true)}>
             Hide
           </DropdownMenuItem>
