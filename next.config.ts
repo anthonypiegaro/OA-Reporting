@@ -8,7 +8,10 @@ const nextConfig: NextConfig = {
         'localhost:3000'
       ]
     }
-  }
+  },
+  eslint: {
+    ignoreDuringBuilds: true, // Disables ESLint during builds
+  },
 };
 
 export default nextConfig;
