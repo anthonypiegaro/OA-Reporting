@@ -32,7 +32,7 @@ interface EditPdfFormProps {
 export default function EditPdfForm({ data, showToast, handleEditOpenChange }: EditPdfFormProps) {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const { toast } = useToast();
-    const queryClient = useQueryClient();
+    
     const form = useForm<PDFAssessment>({
         resolver: zodResolver(editPDFSchema),
         defaultValues: {

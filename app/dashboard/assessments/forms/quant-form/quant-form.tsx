@@ -55,7 +55,7 @@ export default function QuantForm({ handleSuccess }: QuantFormProps) {
         console.log(values)
         setIsSubmitting(true);
         await addQuantitativeAssessment(values)
-            .then((data) => {
+            .then(() => {
                 handleSuccess(values.name);
             })
             .catch((error) => {

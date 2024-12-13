@@ -11,7 +11,6 @@ import {
     Card,
     CardContent,
     CardDescription,
-    CardFooter,
     CardHeader,
     CardTitle,
 } from "@/components/ui/card"
@@ -30,10 +29,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { ToastAction, ToastProps } from "@/components/ui/toast";
 import { EditQualData, editQualitativeAssessmentSchema, FullyProcessedQualitativeAssessment, QualAssessment } from "../types/edit-qual-type";
-import { simulateProcess } from "@/utils/simulateProcess";
 import { getAssessmentDiffs, getDeletedScoreOptionIds, getScoreOptionDiffs } from "./utils";
-import { Description } from "@radix-ui/react-toast";
-import { qualitativeScoreOptions } from "@/app/db/schema";
 import { editQualitativeAssessment } from "../actions/edit-qual-assessment";
 
 interface EditQualFormProps {

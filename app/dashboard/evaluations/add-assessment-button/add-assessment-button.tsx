@@ -30,7 +30,7 @@ interface AddAssessmentButtonProps {
 export default function AddAssessmentButton({ onAddAssessment }: AddAssessmentButtonProps) {
     const [open, setOpen] = useState(false);
     const [selectedAssessment, setSelectedAssessment] = useState<GetAssessmentsType | null>(null);
-    const { isLoading, isError, data: assessments, error } = useQuery({
+    const { data: assessments } = useQuery({
         queryKey: ["assessments"],
         queryFn: getAssessments,
     });

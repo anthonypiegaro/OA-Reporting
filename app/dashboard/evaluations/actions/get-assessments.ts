@@ -71,7 +71,7 @@ export const getAssessments = async (): Promise<GetAssessmentsType[]> => {
         if (assessment.type === "qualitative") {
             return {
                 ...assessment,
-                type: "qualitative" as "qualitative",
+                type: "qualitative" as const,
                 options: optionsHashmap[assessment.id]
             }
         } else if (assessment.type === "quantitative") {

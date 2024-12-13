@@ -1,6 +1,6 @@
 "use server"
 
-import { and, eq, inArray } from "drizzle-orm";
+import { eq, inArray } from "drizzle-orm";
 import { db } from "@/app/db/db";
 import {
     assessments,

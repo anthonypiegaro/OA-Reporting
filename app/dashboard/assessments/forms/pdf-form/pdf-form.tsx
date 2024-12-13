@@ -20,7 +20,6 @@ import { ToastAction } from "@/components/ui/toast";
 
 import { pdfFormSchema } from "./types";
 import { InsertAssessment } from "@/app/db/schema";
-import { simulateProcess } from "@/utils/simulateProcess";
 import { addPDFAssessment } from "./action";
 
 interface PdfFormProps {

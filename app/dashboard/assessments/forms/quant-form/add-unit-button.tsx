@@ -45,7 +45,7 @@ export default function AddUnitButton() {
             },
             body: JSON.stringify(values),
         })
-        .then((data) => {
+        .then(() => {
             toast({
                 title: "Success",
                 description: `${values.name} has been added as a new unit.`

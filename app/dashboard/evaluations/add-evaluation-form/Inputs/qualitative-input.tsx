@@ -39,7 +39,7 @@ export default function QualitativeInput({ form, index, options, disabled }: Qua
         <FormField
             control={form.control}
             name={`assessments.${index}.score`}
-            render={({ field }) => (
+            render={() => (
                 <FormItem>
                     <FormLabel>Score</FormLabel>
                     <Select onValueChange={handleSelectChange} disabled={disabled}>
@@ -50,7 +50,7 @@ export default function QualitativeInput({ form, index, options, disabled }: Qua
                         </FormControl>
                         <SelectContent>
                             {options.map(option => (
-                                <SelectItem value={option.score}>{option.score}</SelectItem>
+                                <SelectItem key={option.qualitativeScoreId} value={option.score}>{option.score}</SelectItem>
                             ))}
                         </SelectContent>
                     </Select>
