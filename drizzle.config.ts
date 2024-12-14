@@ -9,6 +9,9 @@ if (localEnv.error) {
 
 const isProduction = process.env.NODE_ENV === 'production';
 
+console.log("NODE_ENV is set to production: ", isProduction);
+console.log("The node env is set to:", process.env.NODE_ENV);
+
 export default defineConfig({
   out: './drizzle',
   schema: './app/db/schema.ts',
