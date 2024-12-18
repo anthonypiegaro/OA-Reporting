@@ -13,7 +13,7 @@ export default async function EnterAppButton() {
             variant={signedIn ? "default" : "outline"}
             asChild
         >
-            {signedIn ? <Link href="/dashboard">Dashboard</Link> : <Link href="/signin">Sign In</Link>}
+            {signedIn ? <Link href="/dashboard">Dashboard</Link> : <Link href="/sign-in">Sign In</Link>}
         </Button>
     )
 }
