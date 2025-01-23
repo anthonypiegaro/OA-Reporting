@@ -12,7 +12,7 @@ OA Reporting is an athlete report and management tool designed to give athletic 
 ## Features
 
 - **User Creation**: Easily create users in the Users Dashboard. Add details such as their playing level and  email. Assign roles in the dashboard to provide role based authorization.
-- **Custom Assessments**: Create, update and delete your own custom assessments in the Assessments dashboard. The asseessment types were abstracted to allow you to cover a large portion of use cases.
+- **Custom Assessments**: Create, update and delete your own custom assessments in the Assessments dashboard. The assessment types were abstracted to allow you to cover a large portion of use cases.
 - **Custom Evaluations**: Create, update and delete your own custom evaluations. Evaluations are a collection of assessments that tests an athletes current ability.
 - **Custom Templates**: Create custom templates to speed up the evaluation process. Add assessments to your template in any order you like, then use the template when ever wanting to create a common evaluation.
 - **Evaluation Reports**: Once an evaluation is finished, it automatically creates an Evaluation Report for that athlete. This report gives the athlete a score and actionable insights into their performance, configured by the trainer.
